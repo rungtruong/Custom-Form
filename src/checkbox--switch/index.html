@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<title>Switch Component: Checkbox</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script>
+			// remove no-js and add 'js' to the HTML
+			document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+		</script>
+		<link rel="stylesheet" href="../assets/css/--demo-only--.css">
+		<link rel="stylesheet" href="../assets/css/--shared--.css">
+		<link rel="stylesheet" href="../assets/css/switch--checkbox.css">
+		<link rel="stylesheet" href="../assets/css/switch--checkbox--alt.css">
+	</head>
+	<body>
+
+		<div class="demo-wrap">
+
+			<header class="demo-wrap__header">
+				<p class="demo-wrap__header__title">
+					Accessible Styled Form Controls
+				</p>
+				<nav>
+					<a href="https://github.com/scottaohara/a11y_styled_form_controls">See source on GitHub</a>,
+					<a href="/a11y_styled_form_controls">Index of styled form controls</a>
+				</nav>
+			</header>
+
+			<main aria-label="content">
+
+				<article class="demo">
+					<header>
+						<h1>Switch Component: Checkbox</h1>
+						<p>Published: <time>July 26, 2018</time></p>
+						<p>Last updated: <time>March 28, 2019</time></p>
+						<p>
+							Pattern to modify a <code>checkbox</code> into a <code>switch</code> component.
+						</p>
+					</header>
+					<h2>
+						Pattern Demo
+					</h2>
+
+					<form>
+						<p style="margin-bottom: .25em">
+							Version: <code>[type="checkbox"]</code> styled to look like a switch
+						</p>
+						<label class="check-switch" for="switch_1">
+							Example Text 1:
+							<input type="checkbox" id="switch_1">
+							<span aria-hidden="true"></span>
+						</label>
+
+						<p style="margin-bottom: .25em">
+							Version: <code>[type="checkbox"][role="switch"]</code>
+						</p>
+						<label class="check-switch" for="switch_2">
+							Example Text 2:
+							<input type="checkbox" id="switch_2" data-check-switch>
+							<span aria-hidden="true"></span>
+						</label>
+
+						<p style="margin-bottom: .25em">
+							Version: <code>[type="checkbox"][role="switch"]</code> - Alternate Markup/Style
+						</p>
+						<!--
+							Based on pattern by Richard Keizer: https://codepen.io/rakeizer/pen/QQRBoZ
+						-->
+						<div class="switchbox">
+							<label for="switchbox">
+								Example Text 3:
+							</label>
+							<input type="checkbox" id="switchbox" data-check-switch>
+						</div>
+					</form>
+
+					<details style="margin-top: 1em;">
+						<summary>Visual design note</summary>
+						<div>
+							<p>
+								<code>-moz-appearance: none;</code> does not completely remove the styling
+								from the checkbox in Firefox ESR. (works as expected in Firefox 60+).
+							</p>
+							<p>
+								The <code>box-shadow</code> to provide an outline of the control does not
+								render as expected in IE11, but works as expected in Edge.
+							</p>
+							<p>
+								IE and Edge don't respect the box-shadow in High Contrast mode.  In this mode, the <code>::-ms-check</code> is re-enabled so that people will at least see a checkmark when the switch is on, and an empty oval when off.
+							</p>
+						</div>
+					</details>
+
+
+					<section class="demo-details">
+						<h3>
+							Pattern Details
+						</h3>
+
+						<details open>
+							<summary>Pattern Markup</summary>
+								<pre><code class="language-html">&lt;!-- Version: [type="checkbox"] styled to look like a switch -->
+&lt;label class="check-switch" for="switch_1">
+  Example Text 1:
+  &lt;input id="switch_1" type="checkbox">
+  &lt;span aria-hidden="true">&lt;/span>
+&lt;/label>
+
+&lt;!-- Version: [type="checkbox"][role="switch"] -->
+&lt;label class="check-switch" for="switch_2">
+  Example Text 2:
+  &lt;input id="switch_2" data-check-switch="" role="switch" type="checkbox">
+  &lt;span aria-hidden="true">&lt;/span>
+&lt;/label>
+
+&lt;!-- Version: [type="checkbox"][role="switch"] - Alternate Markup/Style -->
+&lt;div class="switchbox">
+  &lt;label for="switchbox">
+    Example Text 3:
+  &lt;/label>
+  &lt;input id="switchbox" data-check-switch="" role="switch" type="checkbox">
+&lt;/div></code></pre>
+						</details>
+
+						<p>
+							Similar to the <a href="../checkbox/index.html">styled checkbox pattern</a>, similarly a checkbox can be used to create a custom switch control. It should be noted that a form control with the role of <code>switch</code> vs a <code>checkbox</code> role have different expectations to screen reader users.
+						</p>
+
+						<p>
+							Even if visually styled to resemble a switch, if a native checkbox is used without the <code>role="switch"</code>, the component should continue to function like a checkbox. Meaning that the "switch" should not change the state of a component or alter a global site or application setting, until after a user submits a form the "switch" is a child of. A <code>role="switch"</code> should be applied to the native checkbox if activating the form control will perform an instant state change, without the need for a form submission.
+						</p>
+
+						<p>
+							If implementing visually styled switches within your project, they should be consistently implemented for each usage. Meaning that if a checkbox is visually designed to look like a switch (but continued to be announced as a checkbox), then there should be no instances where the same design is used for a <code>role="switch"</code>. This would create confusion in why two similar looking controls are announced differently (for sighted users who also may use screen readers), or perform actions immediately or delayed until form submission.
+						</p>
+
+						<h4>The JavaScript</h4>
+						<p>
+							There is little JavaScript that is needed for this component, but what is there is largely for progressive enhancement purposes.
+						</p>
+						<p>
+							Using the <code>data-check-switch</code> attribute as a hook, an <code>input</code> with this attribute will receive a <code>role="switch"</code> when the script runs. Without JavaScript, it will announce itself as a checkbox.
+						</p>
+						<p>
+							The script also allows for the <kbd>Enter</kbd> key to be used to toggle the state of the switch, as checkboxes would otherwise only allow for the <kbd>Space</kbd> key to toggle their state.
+						</p>
+
+						<h4 id="affects_on_sr" tabindex="-1">Affects on Screen Reader Announcements?</h4>
+						<p>
+							Giving the <code>input type="checkbox"</code> a <code>role="switch"</code> announces the form control as a "switch" or "toggle button" to screen readers that support the role, and indicate the element's state as either "on/checked" or "off/not checked".
+						</p>
+
+						<p>
+							Unfortunately, there are still some gaps in support for this <code>role</code>.
+						</p>
+
+						<dl>
+							<dt>JAWS 2019 + Firefox 65.0.1 &amp; Chrome 72</dt>
+							<dd>
+								<p>Announces as a "switch".  Each announce "on" and "off" when toggling state.  Chrome alone will announce "pressed on" for the on state.
+							</dd>
+
+							<dt>Narrator &amp; Edge</dt>
+							<dd>
+								<p>Announces as a "toggle switch". Announces "on" and "off" when toggling state.</p>
+							</dd>
+
+							<dt>VoiceOver + Safari on iOS 12.2</dt>
+							<dd>
+								<p>
+									iOS VoiceOver continues to announce <code>role="switch"</code> as a "checkbox". However, with the release of iOS 12.2 (Mach 2019) the announcement of state has been fixed and "switches" will announce a "checked" or "unchecked" state.
+								</p>
+								<p>
+									Until iOS 12.2+ has wide adoption, one should still be wary of using <code>role="switch"</code>.
+								</p>
+							</dd>
+
+							<dt>VoiceOver + Safari on iOS 11.3 (at least) through 12.1.4</dt>
+							<dd>
+								<p>
+									iOS VoiceOver doesn't understand <code>role="switch"</code> and will fallback to announcing the component as a "checkbox". However, this fallback is bugged, as the state of the checkbox will not be announced to users on toggle of the component.
+								</p>
+							</dd>
+
+							<dt>Narrator &amp; NVDA 2018.4.1 + IE11</dt>
+							<dd>
+								<p>This pairing will ignore the <code>role="switch"</code>, and continue to announce the component as a checkbox.  Checkbox state will be accurately announced on toggle.</p>
+							</dd>
+
+							<dt>JAWS 2018 &amp; 2019 + IE11</dt>
+							<dd>
+								<p>This pairing will announce the form control as a <code>role="switch"</code>, but is inconsistent with announcing the state of the component. Largely only announcing state on a user first focusing the form control with by the virtual cursor navigation or <kbd>tab</kbd> key. If activating the form control repeatedly, focus will be lost and return to an element higher up in the DOM.</p>
+							</dd>
+
+							<dt>NVDA 2018.4.1 + Chrome 72</dt>
+							<dd>
+								<p><code>role="switch"</code> is announced as a "toggle button."  Toggling announces as "pressed checked" and "not pressed" for their respective states.</p>
+							</dd>
+
+							<dt>NVDA 2018.4.1 & 2019.1beta + Firefox 65.0.1</dt>
+							<dd>
+								<p><code>role="switch"</code> is announced as a "toggle button."  Toggling announces as "checked" and "not checked" for their respective states.</p>
+								<p>If "pressed" NVDA will announce initial state as "toggle button not pressed, checked".  Toggling state will only announce "not checked" and "checked".  (<a href="https://github.com/nvaccess/nvda/issues/9187">Open bug</a>)
+							</dd>
+
+							<dt>
+								TalkBack 7.2 (on Android 8.1) + Firefox 64.0.2 &amp; Chrome 71
+							</dt>
+							<dd>
+								<p>
+									Announces as a "switch."  Toggling announces as "checked" and "not checked" for their respective states.</p>
+								</p>
+							</dd>
+						</dl>
+
+
+						<details>
+							<summary>NVDA 2018.1 and 2018.2.1 notes</summary>
+							<p>
+								These versions of NVDA paired with FireFox and Chrome will announce elements with <code>role="switch"</code> as "not pressed" and then announce whether they are checked or not.</p>
+							<p>
+								It doesn't matter the current state of whether the switch is checked or not, with this version of NVDA the switch would always announce "not pressed."
+							</p>
+							<p>
+								This issue appears to have been fixed after testing with NVDA 2018.4.1.
+							</p>
+						</details>
+
+
+						<h4>Usage note:</h4>
+						<p>
+							Until issues with <code>role="switch"</code> have been worked out, and have wide support, it may be better to use a <code>button</code> element, with state indicated by <code>aria-pressed="true/false"</code>. Or stick with a <code>input type="checkbox"</code> if the usage of a checkbox would be an expected user experience.
+						</p>
+						<p>
+							It's important to remember that switches have an expectation to perform an instant update or change to a user's settings or the UI of an application. It's best to leave checkboxes visually styled to look like checkboxes when in the context of a form, where a change wouldn't be expected until form submission.
+						</p>
+
+
+						<h3>Continue Reading</h3>
+						<p>For an alternate minimal pattern to create switch checkboxes,
+						and support for intermediate state, check out
+						<a href="https://codepen.io/aardrian/pen/WPWVvw">Adrian Roselli's Togglish Checkboxen CodePen</a>, and
+							his much longer write-up <a href="http://adrianroselli.com/2019/03/under-engineered-toggles.html">Under Engineered toggles</a>.
+
+					</section> <!-- /.demo-details -->
+				</article>
+			</main>
+		</div> <!-- /.demo-wrap -->
+
+		<script src="../assets/js/switch-checkbox.js"></script>
+		<script>
+			// some other file.js
+			var selector = '[data-check-switch]';
+			var elList = document.querySelectorAll(selector);
+			var i;
+
+			for ( i = 0; i < elList.length; i++ ) {
+				var a11ySwitch = new A11YswitchCheck();
+				a11ySwitch.init( elList[i] );
+			};
+		</script>
+		<script>
+			var highlighterCSS = function () {
+			  var head = document.head;
+			  var link = document.createElement('link');
+
+			  link.rel = 'stylesheet';
+			  link.href = '../assets/vendor/prism.css';
+
+			  head.appendChild(link);
+			}
+
+			highlighterCSS();
+		</script>
+		<script src="../assets/vendor/prism.js"></script>
+	</body>
+</html>

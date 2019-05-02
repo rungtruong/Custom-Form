@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<title>
+			Styled Progress Bar
+		</title>
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1">
+		<script>
+			// remove no-js and add 'js' to the HTML
+			document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+		</script>
+		<link rel="stylesheet" href="../assets/css/--demo-only--.css">
+		<link rel="stylesheet" href="../assets/css/--shared--.css">
+		<link rel="stylesheet" href="../assets/css/progress-bar.css">
+	</head>
+	<body>
+
+		<div class="demo-wrap">
+
+			<header class="demo-wrap__header">
+				<p class="demo-wrap__header__title">
+					Accessible Styled Form Controls
+				</p>
+				<nav>
+					<a href="https://github.com/scottaohara/a11y_styled_form_controls">See source on GitHub</a>,
+					<a href="/a11y_styled_form_controls">Index of styled form controls</a>
+				</nav>
+			</header>
+
+			<main aria-label="content">
+				<article class="demo">
+					<header>
+						<h1>Styled Progress Bar</h1>
+						<p>Published: <time>July 28, 2018</time></p>
+						<p>Last updated: <time>March 2, 2019</time></p>
+						<p>
+							Cross-browser styling for the HTML progress bar.
+						</p>
+					</header>
+
+					<h2>
+						Pattern Demo
+					</h2>
+
+					<div class="progress-meter-example">
+						<label for="tasks_comp2">
+							Tasks Completed:
+							<progress class="progress-bar" id="tasks_comp2" value="50" max="100"></progress>
+						</label>
+					</div>
+
+					<div class="progress-meter-example">
+						<span id="file_status2">
+							File Uploaded:
+						</span>
+						<progress class="progress-bar" aria-labelledby="file_status2" value="70" max="100"></progress>
+					</div>
+
+					<div class="progress-meter-example">
+						<progress class="progress-bar" aria-label="Delivery Status" value="80" max="100"></progress>
+					</div>
+
+					<section class="demo-details">
+						<h3>
+							Pattern Details
+						</h3>
+
+						<details open>
+							<summary>Pattern Markup</summary>
+							<pre><code class="language-html">&lt;label for="tasks_comp2">
+  Tasks Completed:
+  &lt;progress class="progress-bar"
+    id="tasks_comp2"
+    value="50" max="100">&lt;/progress>
+&lt;/label>
+
+&lt;span id="file_status2">
+  File Uploaded:
+&lt;/span>
+&lt;progress class="progress-bar"
+  aria-labelledby="file_status2"
+  value="70" max="100">&lt;/progress>
+
+&lt;progress class="progress-bar"
+  aria-label="Delivery Status"
+  value="80" max="100">&lt;/progress></code></pre>
+
+						</details>
+
+						<p>
+							Unlike many other form elements, a <code>progress</code> element is read-only, and the progress bar is modified by the completion of tasks by a user, or the application itself.
+						</p>
+						<p>
+							A task can refer to user flows, like a user's current progress in a sign up flow, or a task being performed by an application, or server. For example, using a progress bar to indicate the application updating after a form submission, or indicating the progress of a file upload within an application's UI.
+						</p>
+
+						<p>
+							For indicating the state of a finite gauge, such as available diskspace, a <a href="../meter"><code>meter</code></a> would be more semantically appropriate.
+						</p>
+
+						<h4>Styling a <code>progress</code> element</h4>
+
+						<p>
+							The <code>progress</code> element has support in all modern browsers, including Internet Explorer. The only catch to styling it is it requires the use of vendor prefixed selectors. Though, compared to the <a href="../range-slider"><code>range</code> element</a>, there aren't that many to worry about.
+						</p>
+
+						<p>Largely the prefixed selectors to be concerned with are the following:</p>
+
+						<dl>
+							<dt><code>::-webkit-progress-bar</code></dt>
+							<dd>Setting the background style for Webkit</dd>
+							<dt><code>::-ms-fill</code></dt>
+							<dd>Style for progress indicator in MicroSoft browsers</dd>
+							<dt><code>::-moz-progress-bar</code></dt>
+							<dd>Style for progress indicator in Firefox</dd>
+							<dt><code>::-webkit-progress-value</code></dt>
+							<dd>Style for progress indicator in webkit browsers</dd>
+						</dl>
+
+						<p>
+							Additionally there are the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-progress-inner-element" title="on MDN web docs"><code>::-webkit-progress-inner-element</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:indeterminate" title="on MDN web docs"><code>:indeterminate</code></a> selectors. But they are not used for the styled <code>progress</code> elements shown here.
+						</p>
+
+						<h4>Affects on Screen Reader Announcements?</h4>
+
+						<p>
+							Even though the <code>progress</code> element has <a href="https://www.html5accessibility.com/">good accessibility support and feature implementation</a>, not all screen readers have full support for the element, and styling a <code>progress</code> element can have detrimental affects in some instances.
+						</p>
+
+						<p>
+							Note: progress bars are not meant to be focusable elements, so the following tests were performed with the virtual cursor.
+						</p>
+
+						<dl>
+							<dt>
+								JAWS 2018, 2019 + Internet Explorer 11
+							</dt>
+							<dd>
+								<p>
+									A styled or unstyled <code>progress</code> element is not announced when using JAWS with Internet Explorer.
+								</p>
+								<p>
+									JAWS will read the visible text next to the progress bar, but will skip over the progress bar when navigating with the virtual cursor.
+								</p>
+							</dd>
+
+							<dt>
+								JAWS 2018, 2019 + Firefox 63, 65.0.2
+							</dt>
+							<dd>
+								<p>
+									A styled or unstyled <code>progress</code> element is announced the same way when using JAWS with Firefox.
+								</p>
+								<p>
+									The virtual cursor first stops on the visible label of the progress bar and announces the content. The virtual cursor then announces the progress bar and it's current value, <q>##% progress bar.</q>.
+								</p>
+
+								<p>When retesting with JAWS 2019 and Firefox 65.0.2, a progress bar will not announce an accessible name provided by an <code>aria-label</code>.</p>
+							</dd>
+
+							<dt>
+								JAWS 2018, 2019 + Chrome (latest)
+							</dt>
+							<dd>
+								<p>
+									Unstyled progress bars do not announce their accessible name, and styled progress bars convey no information at all.
+								</p>
+							</dd>
+
+							<dt>
+								NVDA 2018.4.1 + Firefox 65.0.2
+							</dt>
+							<dd>
+								<p>
+									When NVDA virtual cursor focuses a styled progress bar with an accessible name provided by a <code>label</code>, NVDA will announce:
+								</p>
+								<p>
+									First stop is the label element:<br>
+									<q>Clickable [Accessible name]</q> <br>
+									Second stop is the progress element:<br>
+									<q>progress bar ##%</q>
+								</p>
+
+								<p>
+									When NVDA virtual cursor focuses a styled progress with an accessible name from <code>aria-labelledby</code> or <code>aria-label</code>, NVDA will announce:
+								</p>
+								<p>
+									<q>[Accessible name (from aria labeling method)], progress bar ##%</q>
+								</p>
+							</dd>
+
+							<dt>
+								NVDA 2018.2.1 + Chrome (latest at time of testing)
+							</dt>
+							<dd>
+								<p>
+									When NVDA virtual cursor focuses a styled or unstyled progress bar with an accessible name provided by a <code>label</code>, NVDA will announce:
+								</p>
+								<p>
+									<q>[Accessible name (from visible label)], progress bar [Accessible name]</q>
+								</p>
+								<p>
+									If an accessible name is provided by an <code>aria-label</code> or <code>aria-labelledby</code> then NVDA will ignore the current value and announce the accessible name in place of the value.
+								</p>
+								<p>
+									<q>[Accessible name (if there's a visible label)], progress bar [Accessible name (from <code>aria-label</code> or <code>aria-labelledby</code>)]</q>
+								</p>
+								<p>
+									The current value of the progress bar is not announced
+								</p>
+							</dd>
+
+							<dt>
+								NVDA 2018.4.1 + Chrome (72)
+							</dt>
+							<dd>
+								<p>Similar to 2018.2.1, the primary difference is that now styled progress bars will announce as "half checked", regardless of what their actual value is.</p>
+							</dd>
+
+							<dt>VoiceOver + Safari 11.1.1 on macOS High Sierra</dt>
+							<dt>VoiceOver + Safari 12.0.3 on macOS Mojave</dt>
+							<dd>
+								<p>
+									Styling progress bars causes their announcement with VoiceOver to be altered and result in more focus stops for a user. A styled progress bar will no longer recognize its accessible name from a <code>label</code>.  If using an <code>aria-label</code> or <code>aria-labelledby</code> with a progress bar, VoiceOver will announce the element as a <code>group</code>. A user will then need to enter the "group" to hear the accessible name and current value of the progress bar. An unstyled progress bar has no "group" announcements, regardless of how the accessible name is applied to the progress bar.
+								</p>
+								<p>
+									A styled progress bar, with a visible <code>label</code>, will be announced as:
+								</p>
+								<p>
+									Focus stop 1: <q>[Accessible name (visible <code>label</code>)]</q><br>
+									Focus stop 2: <q>## percent, progress indicator</q>
+								</p>
+
+								<p>
+									A styled progress bar, with an <code>aria-labelledby</code>, will be announced as:
+								</p>
+								<p>
+									Focus stop 1: <q>[Accessible name (visible <code>label</code>)]</q><br>
+									Focus stop 2: <q>[Accessible name], group</q>
+									<br>
+									Focus stop 3: <q>## percent, progress indicator</q>
+									<br>
+									Focus stop 4: <q>end of [Accessible name], group</q>
+								</p>
+
+								<p>
+									A styled progress bar, with an <code>aria-label</code>, will be announced as:
+								</p>
+								<p>
+									Focus stop 1: <q>[Accessible name], group</q>
+									<br>
+									Focus stop 2: <q>[Accessible name], ## percent, progress indicator</q>
+									<br>
+									Focus stop 3: <q>end of [Accessible name], group</q>
+								</p>
+
+								<p>
+									Note that VoiceOver + Chrome doesn't fair much better, as styled progress bars do not become groups, but are announced as "indeterminate progress indicator" regardless of their set <code>value</code>.
+								</p>
+							</dd>
+
+							<dt>VoiceOver + Safari on iOS 11.4 & 12.1.4</dt>
+							<dd>
+								<p>
+									Regardless of styled or not, VoiceOver does not announce the role of a progress bar when it receives focus.
+								</p>
+								<p>
+									Unstyled progress bars will announce their accessible name and current value if they are focused by VoiceOver. Styled progress bars will not announce their accessible name, unless they explicitly have an <code>aria-label</code>, and they will become undiscoverable when searching by touch.
+								</p>
+								<p>
+									A styled progress bar, with a visible label, will be announced as:
+								</p>
+								<p>
+									Focus stop 1: <q>[Accessible name (visible text)]</q><br>
+									Focus stop 2: <q>##%</q>
+								</p>
+								<p>
+									A styled progress bar, with an <code>aria-label</code>, will be announced as:
+								</p>
+								<p>
+									<q>[Accessible name], ##%</q>
+								</p>
+							</dd>
+
+							<dt>TalkBack (Android Accessibility Suite 6.2) + Android Chrome</dt>
+							<dd>
+								<p>
+									TalkBack has no issues with announcing the accessible name of a progress bar, however regardless of a progress bar being styled or not, TalkBack paired with Chrome does not announce the current value of a progress bar.
+								</p>
+							</dd>
+						</dl>
+
+						<h4>Usage note:</h4>
+						<p>
+							Though the <code>progress</code> element is largely reporting the correct information to browsers, screen readers have quite a few kinks in how they announce the element to users.
+						</p>
+						<p>
+							At the time of testing, a styled progress bar won't be fully accessible in all screen reader and browser pairings. Instead it may be more appropriate to simply treat the progress bar as a visual decoration, hide it from screen readers, and provide visually hidden text as a means to consistently convey the information.
+						</p>
+					</section>
+				</article> <!-- /.demo -->
+			</main>
+		</div> <!-- /.demo-wrap -->
+		<script>
+			var highlighterCSS = function () {
+			  var head = document.head;
+			  var link = document.createElement('link');
+
+			  link.rel = 'stylesheet';
+			  link.href = '../assets/vendor/prism.css';
+
+			  head.appendChild(link);
+			}
+
+			highlighterCSS();
+		</script>
+		<script src="../assets/vendor/prism.js"></script>
+	</body>
+</html>

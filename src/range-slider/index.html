@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<title>
+			Styled Range Slider
+		</title>
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<script>
+			// remove no-js and add 'js' to the HTML
+			document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+		</script>
+		<link rel="stylesheet" href="../assets/css/--demo-only--.css">
+		<link rel="stylesheet" href="../assets/css/--shared--.css">
+		<link rel="stylesheet" href="../assets/css/range.css">
+	</head>
+	<body>
+
+		<div class="demo-wrap">
+
+			<header class="demo-wrap__header">
+				<p class="demo-wrap__header__title">
+					Accessible Styled Form Controls
+				</p>
+				<nav>
+					<a href="https://github.com/scottaohara/a11y_styled_form_controls">See source on GitHub</a>,
+					<a href="/a11y_styled_form_controls">Index of styled form controls</a>
+				</nav>
+			</header>
+
+			<main aria-label="content">
+				<article class="demo">
+					<header>
+						<h1>Styled Range Slider</h1>
+						<p>Published: <time>July 23, 2018</time></p>
+						<p>
+							Cross-browser styling for the native range slider form control.
+						</p>
+					</header>
+
+					<h2>
+						Pattern Demo
+					</h2>
+
+					<label for="range_input">
+						Choose Amount:
+					</label>
+					<input type="range"
+						id="range_input"
+						name="amount"
+						min="0"
+						max="400"
+						step="10"
+						value="200">
+
+					<label for="range_dis">
+						Disabled Range:
+					</label>
+					<input type="range"
+						id="range_dis"
+						disabled
+						name="dis"
+						min="0"
+						max="400"
+						step="10"
+						value="200">
+
+					<section class="demo-details">
+						<h3>
+							Pattern Details
+						</h3>
+
+
+						<details open>
+							<summary>Pattern Markup</summary>
+								<pre><code class="language-html">&lt;label for="range_input">
+  Choose Amount:
+&lt;/label>
+&lt;input type="range"
+  id="range_input"
+  name="amount"
+  min="0"
+  max="400"
+  step="10"
+  value="200"></code></pre>
+						</details>
+
+						<p>
+							The native <code>value</code>, <code>min</code>, <code>max</code>, and <code>step</code> attributes are used to provide the starting value, the minimum and maximum values of the range, and the increment in which a user can change the value, respectively.
+						</p>
+
+						<p>
+							Some things to note when styling a range form control:
+						</p>
+
+						<ul>
+							<li>
+								Each browser's implementation of the range form control requires different browser specific selectors to be used, which can lead to duplicative rule sets. Ideally you'd want to utilize CSS variables or variables from a preprocessor, like Sass, to make sure that any styling updates get made to all browser specific selectors.
+							</li>
+							<li>
+								For whatever reason, Edge will render <code>::-webkit-slider-thumb</code> styles, which would be nice to cut down on browser specific styling, if it weren't for the fact that Webkit and Edge render the form control a bit differently. Webkit needs a negative margin applied to the range's thumb, while Edge does not. Also, IE11 does not respect Webkit's thumb styling, which means that the <code>::-ms-thumb</code> selector is still needed to both properly style for IE11, and remove the negative margin Edge inherits from the Webkit style.
+							</li>
+							<li>
+								A range form control doesn't receive much (if anything) in the way of inherent styling when a <code>disabled</code> attribute is applied to it, unlike other form controls which visually look 'dimmed'. Since the range has so many browser specific selectors, stying a disabled range requires the following:
+									<ul style="margin-top: 1em">
+										<li><code>input[type=range][disabled]</code></li>
+										<li><code>input[type=range][disabled]::-webkit-slider-thumb</code></li>
+										<li><code>input[type=range][disabled]::-moz-range-thumb</code></li>
+										<li><code>input[type=range][disabled]::-ms-thumb</code></li>
+										<li><code>input[type=range]:not([disabled])::-webkit-slider-thumb:active</code></li>
+										<li><code>input[type=range]:not([disabled])::-moz-range-thumb:active</code></li>
+										<li><code>input[type=range]:not([disabled])::-ms-thumb:active</code></li>
+									</ul>
+							</li>
+						</ul>
+
+						<h4>Affects on Screen Reader Announcements?</h4>
+						<p>
+							Applying custom styles to an <code>input type="range"</code> does not alter its announcements by screen readers.
+						</p>
+
+					</section>
+				</article>
+			</main>
+		</div> <!-- /.demo-wrap -->
+		<script>
+			var highlighterCSS = function () {
+			  var head = document.head;
+			  var link = document.createElement('link');
+
+			  link.rel = 'stylesheet';
+			  link.href = '../assets/vendor/prism.css';
+
+			  head.appendChild(link);
+			}
+
+			highlighterCSS();
+		</script>
+		<script src="../assets/vendor/prism.js"></script>
+	</body>
+</html>

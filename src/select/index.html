@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<title>
+			Styled Single Selects
+		</title>
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<script>
+			// remove no-js and add 'js' to the HTML
+			document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+		</script>
+		<link rel="stylesheet" href="../assets/css/--demo-only--.css">
+		<link rel="stylesheet" href="../assets/css/--shared--.css">
+		<link rel="stylesheet" href="../assets/css/select.css">
+	</head>
+	<body>
+
+		<div class="demo-wrap">
+
+			<header class="demo-wrap__header">
+				<p class="demo-wrap__header__title">
+					Accessible Styled Form Controls
+				</p>
+				<nav>
+					<a href="https://github.com/scottaohara/a11y_styled_form_controls">See source on GitHub</a>,
+					<a href="/a11y_styled_form_controls">Index of styled form controls</a>
+				</nav>
+			</header>
+
+			<main aria-label="content">
+				<article class="demo">
+					<header>
+						<h1>Styled Single Selects</h1>
+						<p>Published: <time>July 23, 2018</time></p>
+						<p>Last updated: <time>January 22, 2019</time></p>
+						<p>
+							Cross-browser styling for the default select element.
+						</p>
+					</header>
+
+					<h2>
+						Pattern Demo
+					</h2>
+					<form>
+
+					<label for="ex_custom_select">
+						Custom Style Select
+					</label>
+					<div class="select">
+						<select id="ex_custom_select">
+							<option>Option 1</option>
+							<option>Option 2</option>
+							<option disabled>Option 3</option>
+							<option>Option 4</option>
+						</select>
+					</div>
+
+					<hr>
+
+					<label for="ex_custom_select_dis">
+						Custom Style Select - Disabled
+					</label>
+					<div class="select">
+						<select id="ex_custom_select_dis" disabled>
+							<option>Option 1</option>
+							<option>Option 2</option>
+							<option>Option 3</option>
+						</select>
+					</div>
+
+					<hr>
+
+					<label for="ex_custom_select_req">
+						Custom Style Select - Required
+					</label>
+					<div class="select">
+						<select id="ex_custom_select_req" required>
+							<option value="">Default option</option>
+							<option value="2">Option 2</option>
+							<option value="3">Option 3</option>
+						</select>
+					</div>
+
+					<hr>
+
+					<label for="ex_custom_select_g">
+						Custom Style Select with Optgroup
+					</label>
+					<div class="select">
+						<select id="ex_custom_select_g">
+							<option>Option 1</option>
+							<option>Option 2</option>
+							<option>Option 3</option>
+							<optgroup label="Alternate">
+								<option>Option 4</option>
+								<option>Option 5</option>
+							</optgroup>
+						</select>
+					</div>
+
+
+					<button type="submit" style="margin-top: 2em;">Test submission</button>
+				</form>
+					<section class="demo-details">
+						<h3>
+							Pattern Details
+						</h3>
+
+						<details open>
+							<summary>Pattern Markup</summary>
+							<pre><code class="language-html">&lt;label for="ex_custom_select">
+  Label Text
+&lt;/label>
+&lt;div class="select">
+  &lt;select id="ex_custom_select">
+    &lt;option>Option 1&lt;/option>
+    &lt;option>Option 2&lt;/option>
+    &lt;option>Option 3&lt;/option>
+  &lt;/select>
+&lt;/div></code></pre>
+						</details>
+
+						<p>
+							Consistently cross-browser styling of a <code>select</code> and its child elements has never been a straight forward task. The markup pattern outlined here can provide consistent custom styling for a <code>select</code>'s default, and focused states. However, with some exceptions, browsers don't allow for much, if any, control over the styling of <code>option</code> and <code>optgroup</code> elements.
+						</p>
+
+						<h4>The default <code>select</code></h4>
+
+						<p>
+							The <code>select</code> has much of its native HTML styling removed by use of vendor prefixed <code>appearance: none</code>. Once those native styles have been removed, the element can be redesigned with additional CSS. Additional browser specific selectors for removing native styling from Microsoft browsers (<code>::-ms-value</code> and <code>::-ms-expand</code>), and the focus ring from Firefox (<code>:-moz-focusring</code>) are also needed.
+						</p>
+
+						<p>
+							The wrapping <code>div.select</code> is in place to provide a <code>position: relative</code> container, and to create and position the <code>:before</code> and <code>:after</code> pseudo elements. These pseudo elements are used to recreate a custom down arrow for the <code>select</code>, and its focus state background color.
+						</p>
+
+						<h4>Right to left support</h4>
+						<p>
+							Native <code>select</code> elements support right-to-left languages, and so should custom styled <code>select</code>s.
+						</p>
+						<p>
+							The CSS for this custom style has support for the <code>dir="rtl"</code> attribute, as well as <code>lang="ar"</code> and <code>lang="iw"</code>. You may wish to support <a href="https://en.wikipedia.org/wiki/Right-to-left">additional right-to-left languages</a> as well.
+						</p>
+
+						<h4>Required <code>select</code>s</h4>
+						<p>
+							A <code>select</code> element can have a <code>required</code> attribute, and will trigger an invalid style if the currently selected option has a value set to the empty string. e.g. <code>&lt;option value="">...&lt;/option></code>.
+						</p>
+
+						<h4>Background colors</h4>
+
+						<p>
+							The wrapping <code>div</code> also handles the background color to the <code>select</code>. The background styling should be done to this wrapping element, and not the <code>select</code> element itself, to mitigate issues with how <code>option</code> and <code>optgroup</code> elements inconsistently inherit background color styling of the <code>select</code> across browsers. For instance, in Firefox <code>option</code>s will inherit background styling from the <code>select</code>, but <code>optgroup</code>s will not, and there's no way to style the background of <code>optgroup</code>s in Firefox. This could result in Firefox having <code>option</code>s that match the background color of their parent <code>select</code>, while any <code>optgroup</code> being stuck with the default grey background.
+						</p>
+
+						<p>
+							Internet Explorer and Edge have the best support for styling <code>option</code> and <code>optgroup</code>s. But Chrome, Safari and other Webkit based browsers do not provide any support for styling these elements.
+						</p>
+
+						<p>
+							In conclusion, to "style" a standard <code>select</code> element and give it consistent design across all browsers, its advised to keep the <code>option</code> and <code>optgroup</code> styling as close to browser defaults as possible.  If a fully styleable single-<code>select</code> form control is desired, an <a href="https://w3c.github.io/aria-practices/#Listbox">ARIA listbox</a> might be the way to go. Note, there's quite a bit to do to recreate native <code>select</code> functionality, and keeping small/touch screens in mind.
+						</p>
+
+						<h4>Affects on Screen Reader Announcements?</h4>
+						<p>
+							There are no alterations to how a screen reader should announce styled select elements when following this pattern.
+						</p>
+
+						<p>
+							Note there is a bug with <code>select</code>s (styled or not) with VoiceOver on iOS.  When hitting the "done" button, in the native picker that displays on screen, VoiceOver may not return focus to the <code>select</code> element that had been previously activated.  This is unfortunately a long standing bug with VoiceOver, but here's a <a href="https://bugs.webkit.org/show_bug.cgi?id=174901">issue from 2017 that appears to be related</a>.
+						</p>
+
+						<h3>Continue reading</h3>
+						<p>
+							For more information and guidance on styling <code>select</code> elements, check out <a href="https://www.filamentgroup.com/lab/select-css.html">Styling a Select Like It’s 2019</a> by <a href="https://twitter.com/scottjehl">Scott Jehl</a>.
+						</p>
+
+
+					</section>
+				</article>
+			</main>
+		</div> <!-- /.demo-wrap -->
+
+		<script>
+			var highlighterCSS = function () {
+			  var head = document.head;
+			  var link = document.createElement('link');
+
+			  link.rel = 'stylesheet';
+			  link.href = '../assets/vendor/prism.css';
+
+			  head.appendChild(link);
+			}
+
+			highlighterCSS();
+		</script>
+		<script src="../assets/vendor/prism.js"></script>
+	</body>
+</html>
